@@ -65,7 +65,7 @@ static char	*fill_line(int fd, char *buf, char *left)
 	nb_read = 1;
 	while (nb_read > 0 || ft_strchr(buf, '\n'))
 	{
-		nb_read = read(fd, buf, (size_t)BUFFER_SIZE);//rj3aatttttttttt
+		nb_read = read(fd, buf, (size_t)BUFFER_SIZE);
 		if (nb_read == -1)
 		{
 			free(left);
@@ -75,14 +75,14 @@ static char	*fill_line(int fd, char *buf, char *left)
 			break ;
 		buf[nb_read] = '\0';
 		tmp = left;
-		left = ft_strjoin(left, buf);//raj3aaaaaaaaaaaaaaaaaaaaaat
-		free(tmp);//raj3aaaaaaaaaaaaat 
+		left = ft_strjoin(left, buf);
+		free(tmp);
 		tmp = NULL;
 	}
 	return (left);
 }
 
-char	*get_next_line(int fd)//raj3aaaaaaaaaaaaaaaaaat
+char	*get_next_line(int fd)
 {
 	static char	*left;
 	char		*buf;
@@ -90,7 +90,7 @@ char	*get_next_line(int fd)//raj3aaaaaaaaaaaaaaaaaat
 
 	if (read(fd, 0, 0) == -1)
 		return (NULL);
-	buf = malloc((size_t)BUFFER_SIZE + 1);//raj3aaaaaaaaaaaaat
+	buf = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
 	line = fill_line(fd, buf, left);
