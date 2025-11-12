@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjdia <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/11/07 10:14:35 by sjdia             #+#    #+#             */
-/*   Updated: 2025/11/11 13:41:53 by sjdia            ###   ########.fr       */
+/*   Created: 2025/11/12 10:39:01 by sjdia             #+#    #+#             */
+/*   Updated: 2025/11/12 11:37:46 by sjdia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
@@ -82,9 +82,9 @@ static char	*fill_line(int fd, char *buf, char *left)
 	return (left);
 }
 
-char	*get_next_line(int fd)
+char	*get_next_line_bonus(int fd)
 {
-	static char	*left;
+	static char	*left[MAX_FD];
 	char		*buf;
 	char		*line;
 
@@ -93,17 +93,17 @@ char	*get_next_line(int fd)
 		return (NULL);
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 	{
-		free(left);
+		free(left[fd]);
 		free(buf);
-		left = NULL;
+		left[fd] = NULL;
 		buf = NULL;
 		return (NULL);
 	}
-	line = fill_line(fd, buf, left);
+	line = fill_line(fd, buf, left[fd]);
 	free(buf);
 	buf = NULL;
 	if (!line)
 		return (NULL);
-	left = get_line(line);
+	left[fd] = get_line(line);
 	return (line);
 }
