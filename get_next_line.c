@@ -53,33 +53,35 @@ static char	*get_line(char *line)
 		free(left);
 		left = NULL;
 	}
-	line[i + 1] = '\0';
+	if (line[i] == '\n')
+		line[i + 1] = '\0';
 	return (left);
 }
 
-static char	*fill_line(int fd, char *buf, char *left)
+static char	*fill_line(int fd, char *buf, char **left)
 {
 	char	*tmp;
 	ssize_t	nb_read;
 
 	nb_read = 1;
-	while (nb_read > 0 || ft_strchr(buf, '\n'))
+	while (nb_read > 0 && !ft_strchr(buf, '\n'))
 	{
 		nb_read = read(fd, buf, (size_t)BUFFER_SIZE);
 		if (nb_read == -1)
 		{
-			free(left);
+			free(*left);
+			*left = NULL;
 			return (NULL);
 		}
 		else if (nb_read == 0)
 			break ;
 		buf[nb_read] = '\0';
-		tmp = left;
-		left = ft_strjoin(left, buf);
+		tmp = *left;
+		*left = ft_strjoin(*left, buf);
 		free(tmp);
 		tmp = NULL;
 	}
-	return (left);
+	return (*left);
 }
 
 char	*get_next_line(int fd)
@@ -88,18 +90,12 @@ char	*get_next_line(int fd)
 	char		*buf;
 	char		*line;
 
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
 	buf = malloc((size_t)BUFFER_SIZE + 1);
 	if (!buf)
 		return (NULL);
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-	{
-		free(left);
-		free(buf);
-		left = NULL;
-		buf = NULL;
-		return (NULL);
-	}
-	line = fill_line(fd, buf, left);
+	line = fill_line(fd, buf, &left);
 	free(buf);
 	buf = NULL;
 	if (!line)

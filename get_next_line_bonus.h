@@ -19,8 +19,6 @@
 # define MAX_FD 1024
 # include <unistd.h>
 # include <fcntl.h>
-# include <stdio.h>
-# include <string.h>
 # include <stdlib.h>
 
 char	*get_next_line_bonus(int fd);
