@@ -6,10 +6,10 @@
 /*   By: sjdia <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/07 10:14:35 by sjdia             #+#    #+#             */
-/*   Updated: 2025/11/19 11:28:17 by sjdia            ###   ########.fr       */
+/*   Updated: 2025/11/19 11:35:30 by sjdia            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
- 
+     
 #include "get_next_line.h"
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
